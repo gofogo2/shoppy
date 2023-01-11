@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import './input.css';
 import Routes from './Routes/Routes';
 
 function App() {
