@@ -1,26 +1,33 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import AllProducts from "../Views/AllProducts";
+import MyCart from "../Views/MyCart";
+import NewProduct from "../Views/NewProduct";
+import NotFound from "../Views/NotFound";
+import ProductsDetail from "../Views/ProductsDetail";
 import Root from "./Root";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
+    errorElement:<NotFound/>,
     children:[{
         index:true,
-        element:<div>Index</div>
+        element:<div>Index</div>,
+        
     },{
         path:'products',
-        element:<div>products</div>
+        element:<AllProducts/>
     },{
         path:'products/new',
-            element:<div>products/new</div>
+            element:<NewProduct/>
         },{
         path:'products/:id',
-        element:<div>products/:id</div>
+        element:<ProductsDetail/>
     },{
         path:'carts',
-        element:<div>carts</div>
+        element:<MyCart/>
     }]
   },
   {
