@@ -3,30 +3,26 @@ import { FiShoppingBag } from "react-icons/fi";
 import { MdModeEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { login, logout, onUserStateChanged } from "../api/firebase";
+import User from "../Components/User";
 
 const Header = () => {
-
-
-  useEffect(()=>{
-    onUserStateChanged((user)=>{
-        console.log(user);
-        setUser(user);
+  useEffect(() => {
+    onUserStateChanged((user) => {
+      console.log(user);
+      setUser(user);
     });
-  })
+  }, []);
 
   const [user, setUser] = useState(null);
   const handleLogin = async () => {
-    console.log("aaa");
     login().then((user) => {
-      console.log(user);
       setUser(user);
     });
   };
 
   const handleLogout = async () => {
-    console.log("aaa");
     logout().then(() => {
-      setUser(undefined);
+      setUser(null);
     });
   };
 
@@ -37,12 +33,17 @@ const Header = () => {
         <div className="text-4xl text-brand">Shoppy</div>
       </div>
       <nav className="flex items-center gap-4">
-        <Link to="/products" className="font-semibold">
-          Products
-        </Link>
-        <Link to="/carts" className="font-semibold">
-          Carts
-        </Link>
+        {user && user.isAdmin && (
+          <Link to="/products" className="font-semibold">
+            Products
+          </Link>
+        )}
+
+        {user && user.isAdmin && (
+          <Link to="/carts" className="font-semibold">
+            Carts
+          </Link>
+        )}
         <div>
           <Link to="/">
             <MdModeEdit className="text-2xl" />
@@ -54,7 +55,7 @@ const Header = () => {
           </button>
         ) : (
           <div className="flex">
-            <img className="w-10 mr-2 rounded-full " src={user.photoURL} />{" "}
+            <User user={user} />
             <button
               onClick={() => {
                 handleLogout();
